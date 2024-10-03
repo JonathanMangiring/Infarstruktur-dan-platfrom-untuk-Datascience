@@ -2,11 +2,11 @@
 EDA
 EDA pada Statistik Spotify, yang mencakup
 
-Memuat Data
-Informasi Dasar
-Duplikat atau Nilai Unik
-Visualisasi Nilai Unik
-Mengetahui jenis data dari dataset untuk mempermudah proses
-Memfilter Data
-Membuat Box Plot
-Korelasi
+1. Memuat Data
+2. Informasi Dasar
+3. Duplikat atau Nilai Unik
+4. Visualisasi Nilai Unik
+5. Mengetahui jenis data dari dataset untuk mempermudah proses
+6. Memfilter Data
+7. Membuat Box Plot
+8. Korelasi
