@@ -209,6 +209,21 @@ plt.show()
 
   `plt.show()`: Kode ini menampilkan boxplot.
 
+![image](https://github.com/user-attachments/assets/f4c89475-5a80-406a-b298-db3dae1ed620)
+
+## 11. korelasi
+Menghitung korelasi antara 2 variabel
+```py
+korelasi = df[['Daily', 'Streams']].corr()
+korelasi
+```
+
+`korelasi = df[['Daily', 'Streams']].corr()`: Kode ini menghitung korelasi antara dua variabel, yaitu 'Daily' dan 'Streams', dari dataframe df.
+
+`corr()`: Fungsi ini menghitung korelasi antara dua variabel. Korelasi adalah ukuran yang menunjukkan seberapa kuat hubungan antara dua variabel.
+
+![image](https://github.com/user-attachments/assets/1d6d2158-9bf1-4aed-8644-f71404391fc0)
+
 
   
 
