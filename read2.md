@@ -71,6 +71,13 @@ plt.show()
 
 ![image](https://github.com/user-attachments/assets/d61f1059-376f-4183-aa48-3d6d57dadebf)
 
+
+- `for i, var in enumerate(kolom_numerik):` kode ini digunakan untuk memanggil setiap nilai dan setiap index dari nilai yang dipanggil contoh: `0 MPG` 0 sebagai i dan MPG sebagai var
+- `sns.boxplot(y=data[var], ax=ax[i])` kode yang di loop ini berguna untuk membuat masing-masing box plot. `y=data[var]` digunakan untuk memasukkan data yang ingin dibuat box plot di sumbu y kita bisa menggunakan `x=data[var` tetapi nantinya hasil dari box plot akan menjadi horizontal, lalu fungsi dari `ax=ax[i]` digunakan untuk menempatkan boxplot yang telah dibuat di axis sublot yang kita buat diatas
+- `ax[i].set_title(f'Boxplot dari data {var}')` kode ini digunakan untuk memberikan judul dari setiap boxplot yang kita buat dengan nama kolom yang sesuai
+
+
+
 ## Z score
 Jika kita menggunakan Z Score, Z Score sedikit kurang kebal dengan outlier, dengan arti karena Z Score didapatkan dengan menggunakan standar deviasi dan rata-rata yang dimana outlier tersebut juga ikut serta untuk menghasilkan Z Score.
 
@@ -85,4 +92,73 @@ for i in kolom:
 
 ![image](https://github.com/user-attachments/assets/cad7ba8b-7bf0-467f-881b-0c8e6a33e1a5)
 
+# 3. Uji korelasi
+Uji korelasi dengan pearson
+
+```pyimport numpy as np
+import pandas as pd
+from scipy.stats import pearsonr
+
+def korelasi_pearson_aman(x, y):
+    """Melakukan korelasi Pearson dengan aman, menangani NaN dan nilai tak hingga."""
+    x = np.asarray(x)
+    y = np.asarray(y)
+
+    if np.isnan(x).any() or np.isnan(y).any():
+        return 'Error: Data mengandung nilai NaN. Harap bersihkan data.'
+    if not np.isfinite(x).all() or not np.isfinite(y).all():
+        return 'Error: Data mengandung nilai tak hingga. Harap bersihkan data.'
+    
+    return pearsonr(x, y)
+
+def tingkat_korelasi(hasil_pearson):
+    """Mengkategorikan kekuatan korelasi."""
+    korelasi = hasil_pearson[0]
+    if korelasi > 0.8:
+        return "Sangat kuat"
+    elif 0.6 < korelasi <= 0.8:
+        return "Kuat"
+    elif 0.4 < korelasi <= 0.6:
+        return "Sedang"
+    elif 0.2 < korelasi <= 0.4:
+        return "Lemah"
+    else:
+        return "Sangat lemah"
+
+# --- Pembersihan Data ---
+# Mengganti nilai tak hingga dengan NaN
+data.replace([np.inf, -np.inf], np.nan, inplace=True)
+
+# Menghapus baris dengan nilai NaN di kolom 'Streams' dan 'Daily'
+data.dropna(subset=['Streams', 'Daily'], inplace=True)
+# --- Akhir Pembersihan Data ---
+
+# Menghitung korelasi Pearson menggunakan fungsi yang aman
+hasil1 = korelasi_pearson_aman(data['Streams'], data['Daily'])
+
+# Menampilkan hasil dengan penanganan kesalahan dan kesimpulan
+if isinstance(hasil1, str):
+    print(hasil1)
+else:
+    tingkat_korelasi1 = tingkat_korelasi(hasil1)
+    print(f"Korelasi antara kolom 'Streams' dan 'Daily' adalah {tingkat_korelasi1}")
+
+    # --- Kesimpulan ---
+    print("\nKesimpulan:")
+    if tingkat_korelasi1 == "Sangat kuat" or tingkat_korelasi1 == "Kuat":
+        print("Terdapat korelasi yang kuat antara jumlah streaming dan jumlah pendengar harian.")
+        print("Ini menunjukkan bahwa lagu-lagu dengan jumlah streaming yang tinggi cenderung memiliki jumlah pendengar harian yang tinggi pula.")
+    elif tingkat_korelasi1 == "Sedang":
+        print("Terdapat korelasi moderat antara jumlah streaming dan jumlah pendengar harian.")
+        print("Hubungan antara kedua variabel ini cukup terlihat, tetapi tidak sekuat korelasi yang kuat.")
+    else:
+        print("Korelasi antara jumlah streaming dan jumlah pendengar harian lemah atau sangat lemah.")
+        print("Ini menunjukkan bahwa jumlah streaming tidak memiliki pengaruh yang signifikan terhadap jumlah pendengar harian.")
+    # --- Akhir Kesimpulan ---
+```
+![image](https://github.com/user-attachments/assets/fa1f9fe6-46c4-4f62-b1a2-eda3a4e5810d)
+
+Kesimpulan:
+Terdapat korelasi moderat antara jumlah streaming dan jumlah pendengar harian.
+Hubungan antara kedua variabel ini cukup terlihat, tetapi tidak sekuat korelasi yang kuat.
 
